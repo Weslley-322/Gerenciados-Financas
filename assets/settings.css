@@ -1,0 +1,223 @@
+/* Definições de cores para o tema escuro */
+:root {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #2a2a2a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --accent-color: #bb86fc;
+    --accent-hover: #a56ef3;
+    --border-color: #333333;
+    --input-bg: #333333;
+    --input-border: #555555;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Definições de cores para o tema claro */
+body.light-theme {
+    --bg-primary: #f0f2f5;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #e0e0e0;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --accent-color: #6200ee;
+    --accent-hover: #3700b3;
+    --border-color: #cccccc;
+    --input-bg: #f5f5f5;
+    --input-border: #aaaaaa;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos globais para a janela de configurações */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    background-color: var(--bg-secondary);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    width: 90%;
+    max-width: 500px;
+}
+
+h2 {
+    color: var(--text-primary);
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Estilos para cada item de configuração */
+.setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--bg-tertiary);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.setting-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.setting-item label {
+    font-size: 1.1em;
+    color: var(--text-primary);
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+/* Estilos para selects e inputs */
+.setting-item select {
+    padding: 8px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 1em;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    margin-left: 20px;
+}
+
+select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+/* Estilos para o checkbox normal (o "Manter tela ligada") */
+.setting-item input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--text-secondary);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    margin-left: 20px;
+}
+
+.setting-item input[type="checkbox"]:checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.setting-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    font-size: 1.5em;
+    color: var(--bg-primary);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ========================= */
+/* Botão de alternância Tema
+/* ========================= */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;   
+    height: 20px;  
+    margin-left: 20px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: background-color 0.4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: transform 0.4s;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px); 
+}
+
+/* Ícones centralizados e compactos */
+.theme-icon {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.theme-icon.sun {
+    left: 4px;
+    color: #000000;
+}
+
+.theme-icon.moon {
+    right: 4px;
+    color: rgb(0, 0, 0);
+}
+
+/* Alternância dos ícones */
+input:not(:checked) + .slider .theme-icon.moon {
+    opacity: 0;
+}
+
+input:not(:checked) + .slider .theme-icon.sun {
+    opacity: 1;
+}
+
+input:checked + .slider .theme-icon.sun {
+    opacity: 0;
+}
+
+input:checked + .slider .theme-icon.moon {
+    opacity: 1;
+}

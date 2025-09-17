@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador Financeiro</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <div id="main-content">
+        <h1 id="app-title">Gerenciador Financeiro</h1>
+        <div id="summary-container">
+            <div class="summary-card balance-card">
+                <h3 id="total-balance-label">Saldo Total</h3>
+                <span id="total-balance-el">0.00</span>
+            </div>
+            <div class="summary-card income-card">
+                <h3 id="total-income-label">Total de Receitas</h3>
+                <span id="total-income-el">0.00</span>
+            </div>
+            <div class="summary-card expense-card">
+                <h3 id="total-expense-label">Total de Despesas</h3>
+                <span id="total-expense-el">0.00</span>
+            </div>
+        </div>
+        <button id="add-transaction-btn">Adicionar Transação</button>
+        <div id="transactions-container">
+            <h2>Transações</h2>
+            <ul id="transactions-list"></ul>
+            <button id="clear-balance-btn">Limpar Saldo</button>
+        </div>
+    </div>
+
+    <div id="transaction-sidebar" class="sidebar">
+        <button id="close-sidebar-btn" class="close-btn">x</button>
+        <h2 id="add-transaction-title">Adicionar Nova Transação</h2>
+        <form id="add-transaction-form" class="sidebar-content">
+    <div class="form-group">
+        <label for="type" id="label-type">Tipo de Transação:</label>
+        <div class="transaction-type-group">
+            <input type="radio" id="type-income" name="type" value="income" checked>
+            <label for="type-income" id="label-income">Receita</label>
+            <input type="radio" id="type-expense" name="type" value="expense">
+            <label for="type-expense" id="label-expense">Despesa</label>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="value" id="label-value">Valor:</label>
+        <input type="number" id="value" name="value" step="0.01" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="description" id="label-description">Descrição:</label>
+        <textarea id="description" name="description"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="date" id="label-date">Data:</label>
+        <input type="date" id="date" name="date" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="reminder-date" id="label-reminder">Data do Lembrete (Opcional):</label>
+        <input type="date" id="reminder-date" name="reminder-date">
+    </div>
+
+    <button type="submit" id="submit-btn">Salvar Transação</button>
+</form>
+    </div>
+    
+   <script src="../renderer.js"></script>
+</body>
+</html>

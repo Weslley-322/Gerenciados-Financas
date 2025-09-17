@@ -1,0 +1,33 @@
+{
+  "name": "projeto-electron",
+  "version": "1.0.0",
+  "description": "Gerenciador Financeiro",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "author": "Weslley",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.7"
+  },
+  "build": {
+    "productName": "Gerenciador Financeiro",
+    "appId": "com.gerenciadorfinanceiro",
+    "win": {
+      "icon": "assets/icons/icon.ico"
+    },
+    "mac": {
+      "icon": "assets/icons/icon.icns"
+    },
+    "files": [
+      "**/*"
+    ]
+  }
+}

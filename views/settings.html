@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="title-settings">Configurações</title>
+    <link rel="stylesheet" href="../assets/settings.css">
+</head>
+<body>
+    <div class="container">
+        <h2 id="settings-title">Configurações</h2>
+        <form>
+            <div class="setting-item">
+                <label id="theme-label">Tema:</label>
+                <div class="theme-switch-container">
+                    <label class="theme-switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider round">
+                            <svg id="sun-icon" class="theme-icon sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 17C14.7614 17 17 14.7614 17 12C17 9.23858 14.7614 7 12 7C9.23858 7 7 9.23858 7 12C7 14.7614 9.23858 17 12 17Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 2V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 21V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4.22 4.22L4.92 4.92" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M19.08 19.08L19.78 19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M21 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4.22 19.78L4.92 19.08" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M19.08 4.92L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <svg id="moon-icon" class="theme-icon moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="setting-item">
+                <label for="language-selector" id="language-label">Idioma:</label>
+                <select id="language-selector">
+                    <option value="pt-br" id="lang-ptbr-option">Português (Brasil)</option>
+                    <option value="en" id="lang-en-option">English</option>
+                </select>
+            </div>
+
+            <div class="setting-item">
+                <label for="power-save-blocker" id="power-save-blocker-label">Manter tela ligada:</label>
+                <input type="checkbox" id="power-save-blocker">
+            </div>
+        </form>
+    </div>
+
+    <script src="../src/settings.js"></script>
+</body>
+</html>

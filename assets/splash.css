@@ -1,0 +1,26 @@
+body {
+    background-color: #1a1a2e;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    -webkit-app-region: no-drag;
+}
+
+.loading-container {
+    text-align: center;
+}
+
+.loading-gif {
+    max-width: 150px;
+    height: auto;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin-top: 20px;
+}
