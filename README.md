@@ -7,14 +7,16 @@ O aplicativo permite que você adicione e acompanhe suas transações de receita
 ## Funcionalidades Principais
 
 * **Registro de Transações:** Adicione novas receitas e despesas com valor, categoria e descrição.
-* **Visualização de Dados:** Acompanhe o saldo total e a soma de receitas e despesas em tempo real.
+* **Visualização de Dados:** Acompanhe o saldo total, a soma de receitas e despesas em tempo real, e limpe o saldo quando necessário.
+* **Formatação de Data Intuitiva:** As datas das transações são exibidas no formato DD/MM/AAAA para uma visualização mais clara.
 * **Opções de Personalização:**
 * **Temas:** Alternância entre os modos claro e escuro.
 * **Idiomas:** Suporte para português (Brasil) e inglês.
 * **Prevenção de Hibernação:** Opção para manter a tela ligada, ideal para monitorar a aplicação por longos períodos.
 * **Notificações de Lembretes:** Receba notificações para despesas futuras com base em uma data de lembrete.
 * **Experiência de Usuário Aprimorada:**
-* **Splash Screen:** Uma tela de carregamento animada com um GIF, proporcionando uma inicialização mais agradável.
+* **Splash Screen:** Uma tela de carregamento é exibida durante a inicialização do aplicativo, melhorando a experiência do usuário.
+* **Minimizar para a Bandeja:** Ao clicar no 'X', o aplicativo minimiza para a bandeja do sistema em vez de ser encerrado, permitindo acesso rápido.
 * **Ícone do Aplicativo:** Ícone personalizado na barra de tarefas e na área de trabalho, garantindo uma identidade visual única.
 * **Banco de Dados Local:** Todas as transações são armazenadas em um banco de dados SQLite3, garantindo que seus dados permaneçam privados e seguros em seu computador.
 

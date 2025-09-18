@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu, Notification, powerSaveBlocker } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog, Notification, powerSaveBlocker, Tray } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { initializeDatabase, getDatabase, deleteTransaction } = require('./database/database.js');
@@ -8,6 +8,8 @@ const balancePath = path.join(app.getPath('userData'), 'balance.json');
 let powerSaveBlockerId = 0;
 let mainWindow;
 let settingsWindow;
+let tray;
+let splashWindow;
 
 let languages;
 
@@ -113,10 +115,28 @@ function createAppMenu() {
     Menu.setApplicationMenu(menu);
 }
 
+function createTray() {
+    const lang = loadLanguage(getSettings().lang);
+    const iconPath = path.join(__dirname, 'assets', 'icons', 'icon.ico');
+    tray = new Tray(iconPath);
+    tray.setToolTip(lang.appTitle);
+
+    const contextMenu = Menu.buildFromTemplate([
+        { label: lang.showApp, click: () => mainWindow.show() },
+        { label: lang.menuExit, click: () => app.quit() }
+    ]);
+    tray.setContextMenu(contextMenu);
+
+    tray.on('click', () => {
+        mainWindow.show();
+    });
+}
+
 function createMainWindow() {
     mainWindow = new BrowserWindow({
         width: 1024,
         height: 768,
+        show: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
@@ -130,6 +150,14 @@ function createMainWindow() {
     mainWindow.webContents.on('did-finish-load', () => {
         mainWindow.webContents.send('update-language', lang);
         mainWindow.webContents.send('update-theme', settings.theme);
+        mainWindow.show();
+    });
+
+    mainWindow.on('close', (event) => {
+        if (!app.isQuiting) {
+            event.preventDefault();
+            mainWindow.hide();
+        }
     });
 
     if (settings.preventDisplaySleep) {
@@ -151,6 +179,12 @@ function createSettingsWindow() {
 
     settingsWindow.loadFile(path.join(__dirname, 'views', 'settings.html'));
 
+    settingsWindow.webContents.on('did-finish-load', () => {
+        const settings = getSettings();
+        const lang = loadLanguage(settings.lang);
+        settingsWindow.webContents.send('update-language', lang);
+    });
+
     settingsWindow.once('ready-to-show', () => {
         settingsWindow.show();
     });
@@ -160,7 +194,28 @@ function createSettingsWindow() {
     });
 }
 
+function createSplashScreen() {
+    splashWindow = new BrowserWindow({
+        width: 400,
+        height: 250,
+        transparent: true,
+        frame: false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
+    });
+
+    splashWindow.loadFile(path.join(__dirname, 'views', 'splash.html'));
+}
+
 function checkExpiredReminders() {
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        const [year, month, day] = dateString.split('-');
+        return `${day}/${month}/${year}`;
+    };
+
     const db = getDatabase();
     const today = new Date().toISOString().split('T')[0];
     
@@ -172,9 +227,11 @@ function checkExpiredReminders() {
         if (rows.length > 0) {
             const lang = loadLanguage(getSettings().lang);
             rows.forEach(row => {
+                const formattedDate = formatDate(row.reminderDate);
+                
                 new Notification({
                     title: lang.reminderTitle,
-                    body: `Lembrete: Pagar ${row.description} em ${row.reminderDate}`
+                    body: `Lembrete: Pagar ${row.description} em ${formattedDate}`
                 }).show();
             });
         }
@@ -182,16 +239,45 @@ function checkExpiredReminders() {
 }
 
 app.whenReady().then(() => {
-    initializeDatabase();
+    // 1. Criar a janela de splash screen
+    createSplashScreen();
     
-    languages = {
-        'en': JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'lang', 'en.json'), 'utf8')),
-        'pt-br': JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'lang', 'pt.json'), 'utf8'))
-    };
+    // 2. Executar todas as inicializações dentro de uma Promise
+    Promise.all([
+        initializeDatabase(),
+        new Promise(resolve => {
+            languages = {
+                'en': JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'lang', 'en.json'), 'utf8')),
+                'pt-br': JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'lang', 'pt.json'), 'utf8'))
+            };
+            resolve();
+        })
+    ]).then(() => {
+        // 3. Quando tudo estiver pronto, criar as outras janelas e funcionalidades
+        createMainWindow();
+        createAppMenu();
+        createTray();
+        checkExpiredReminders();
 
-    createMainWindow();
-    createAppMenu();
-    checkExpiredReminders();
+        // 4. Fechar a tela de splash e exibir a janela principal
+        if (splashWindow) {
+            splashWindow.close();
+            splashWindow = null;
+        }
+    }).catch(err => {
+        console.error('Falha na inicialização:', err);
+        app.quit();
+    });
+
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createMainWindow();
+        }
+    });
+    
+    app.on('before-quit', () => {
+        app.isQuiting = true;
+    });
 
     ipcMain.on('new-transaction', (event, transaction) => {
         const db = getDatabase();
@@ -269,20 +355,9 @@ app.whenReady().then(() => {
     ipcMain.handle('get-settings', () => {
         return getSettings();
     });
-
-    ipcMain.on('update-theme', (event, theme) => {
-        if (mainWindow) {
-            if (theme === 'light') {
-                mainWindow.webContents.executeJavaScript(`document.body.classList.add('light-theme');`);
-            } else {
-                mainWindow.webContents.executeJavaScript(`document.body.classList.remove('light-theme');`);
-            }
-        }
-    });
 });
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        app.quit();
     }
 });

@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let lang;
 
+    function formatdate(dateString){
+        if (!dateString) return '';
+        const [year, month, day] = dateString.split('-');
+        return `${day}/${month}/${year}`;
+    }
+
     function updateUIWithTranslations() {
         if (!lang) return;
         
@@ -67,12 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (clearBalanceBtn) clearBalanceBtn.textContent = lang.clearBalanceBtn;
     }
 
-    // A função renderTransactions agora recebe o saldo diretamente do main.js
     function renderTransactions(data) {
         if (!lang) return;
-
-        const transactions = data.transactions;
-        const balance = data.balance;
+        const { transactions, balance } = data;
 
         let totalIncome = 0;
         let totalExpense = 0;
@@ -90,11 +93,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         totalExpense += transaction.value;
                     }
+                    
+                    const formattedDate = formatdate(transaction.date);
 
                     listItem.innerHTML = `
                         <div class="transaction-details">
                             <span class="transaction-description">${transaction.description || 'N/A'}</span>
-                            <span class="transaction-date">${transaction.date}</span>
+                            <span class="transaction-date">${formattedDate}</span>
                         </div>
                         <span class="transaction-value ${valueClass}">R$ ${displayValue.toFixed(2)}</span>
                         <button class="delete-btn" data-id="${transaction.id}">×</button>
@@ -106,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
-        // Renderiza os valores. O saldo é recebido do main.js.
         if (totalBalanceEl) totalBalanceEl.textContent = `R$ ${balance.toFixed(2)}`;
         if (totalIncomeEl) totalIncomeEl.textContent = `R$ ${totalIncome.toFixed(2)}`;
         if (totalExpenseEl) totalExpenseEl.textContent = `R$ ${Math.abs(totalExpense).toFixed(2)}`;
@@ -154,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ** Novo: Adiciona o listener para o botão de limpar saldo **
     if (clearBalanceBtn) {
         clearBalanceBtn.addEventListener('click', () => {
             window.electronAPI.clearBalance();
@@ -167,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ** Modificado: Agora recebe um objeto com transações e saldo **
     window.electronAPI.onTransactionsReceived((data) => {
         renderTransactions(data);
     });
@@ -176,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.electronAPI.getTransactions();
     });
 
-    // ** Novo: Listener para quando o saldo é limpo **
     window.electronAPI.onBalanceCleared(() => {
         window.electronAPI.getTransactions();
     });
