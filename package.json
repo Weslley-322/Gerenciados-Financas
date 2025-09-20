@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "pack:win": "electron-builder --win",
-    "pack:mac": "electron-builder --mac",
+    "pack:linux": "electron-builder --linux",
     "build": "electron-builder"
   },
   "keywords": [],
@@ -27,6 +27,13 @@
     },
     "mac": {
       "icon": "assets/icons/icon.icns"
+    },
+    "linux":{
+      "target": [
+        "AppImage"
+      ],
+      "category": "Finance",
+      "icon":   "assets/icons/icon.png"
     },
     "files": [
       "**/*"
