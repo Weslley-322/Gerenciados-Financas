@@ -10,14 +10,14 @@ O aplicativo permite que você adicione e acompanhe suas transações de receita
 * **Visualização de Dados:** Acompanhe o saldo total, a soma de receitas e despesas em tempo real, e limpe o saldo quando necessário.
 * **Formatação de Data Intuitiva:** As datas das transações são exibidas no formato DD/MM/AAAA para uma visualização mais clara.
 * **Opções de Personalização:**
-* **Temas:** Alternância entre os modos claro e escuro.
-* **Idiomas:** Suporte para português (Brasil) e inglês.
-* **Prevenção de Hibernação:** Opção para manter a tela ligada, ideal para monitorar a aplicação por longos períodos.
+    * **Temas:** Alternância entre os modos claro e escuro.
+    * **Idiomas:** Suporte para português (Brasil) e inglês.
+    * **Prevenção de Hibernação:** Opção para manter a tela ligada, ideal para monitorar a aplicação por longos períodos.
 * **Notificações de Lembretes:** Receba notificações para despesas futuras com base em uma data de lembrete.
 * **Experiência de Usuário Aprimorada:**
-* **Splash Screen:** Uma tela de carregamento é exibida durante a inicialização do aplicativo, melhorando a experiência do usuário.
-* **Minimizar para a Bandeja:** Ao clicar no 'X', o aplicativo minimiza para a bandeja do sistema em vez de ser encerrado, permitindo acesso rápido.
-* **Ícone do Aplicativo:** Ícone personalizado na barra de tarefas e na área de trabalho, garantindo uma identidade visual única.
+    * **Splash Screen:** Uma tela de carregamento é exibida durante a inicialização do aplicativo, melhorando a experiência do usuário.
+    * **Minimizar para a Bandeja:** Ao clicar no 'X', o aplicativo minimiza para a bandeja do sistema em vez de ser encerrado, permitindo acesso rápido.
+    * **Ícone do Aplicativo:** Ícone personalizado na barra de tarefas e na área de trabalho, garantindo uma identidade visual única.
 * **Banco de Dados Local:** Todas as transações são armazenadas em um banco de dados SQLite3, garantindo que seus dados permaneçam privados e seguros em seu computador.
 
 ## Tecnologias Utilizadas
@@ -30,7 +30,7 @@ O aplicativo permite que você adicione e acompanhe suas transações de receita
 
 ## Como Instalar e Rodar o Projeto
 
-Siga estes passos para configurar e executar o aplicativo em seu ambiente de desenvolvimento.
+Siga estes passos para configurar e executar o aplicativo em seu ambiente de desenvolvimento ou baixar a versão final.
 
 ### Pré-requisitos
 Certifique-se de ter o [Node.js](https://nodejs.org/) e o npm (gerenciador de pacotes do Node) instalados em sua máquina.
