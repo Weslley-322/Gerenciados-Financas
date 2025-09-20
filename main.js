@@ -117,7 +117,7 @@ function createAppMenu() {
 
 function createTray() {
     const lang = loadLanguage(getSettings().lang);
-    const iconPath = path.join(__dirname, 'assets', 'icons', 'icon.ico');
+    const iconPath = path.join(__dirname, 'assets', 'icons', 'icon.png');
     tray = new Tray(iconPath);
     tray.setToolTip(lang.appTitle);
 
